@@ -12,25 +12,31 @@
     <body>
         <script src="https://threejs.org/build/three.min.js"></script>
         <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
-        <script>
-        var camera, scene, renderer, controls, mesh;
 
+        <!-- https://stemkoski.github.io/Three.js/Polyhedra.html -->
+        <!-- https://stemkoski.github.io/Three.js/js/polyhedra.js -->
+        <script src="polyhedra.js"></script>
+        
+        <script>
+        var camera, scene, renderer, controls, mesh, directionalLight;
+        
         init();
         animate();
-
+        
         function init() {
+            
             renderer = new THREE.WebGLRenderer();
             renderer.setSize( window.innerWidth, window.innerHeight );
             document.body.appendChild( renderer.domElement );
-
+            
             scene = new THREE.Scene();
-
+            
             camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
             camera.position.set( 0, 0, 150 );
-
+            
             controls = new THREE.OrbitControls( camera );
             controls.enablePan = false;
-
+            
             var loader = new THREE.TextureLoader();
             loader.crossOrigin = '';
             loader.load('https://sampleimages.herokuapp.com/?src=midnightcomet.jpg', function ( texture ) {
@@ -41,44 +47,68 @@
                 scene.add(mesh);
                 mesh.rotation.y -= 1.38;
                 mesh.rotation.x -= 0.18;*/
-
-                var vertices = [
-                  -1, -1, 1,
-                  .75, -1, 1,
-                  1, -1, .75,
-                  1, -1, -1,
-                  -.75, -1, -1,
-                  -1, -1, -.75,
-                  -1, .75, 1,
-                  1, .75, -1
+                
+                /*var light1 = new THREE.PointLight (0xffffff, 4, 100);
+                light1.position.set (10, 10, 10);
+                scene.add (light1);
+                
+                var light2 = new THREE.PointLight (0xffffff, 4, 100);
+                light2.position.set (-10, -10, -10);
+                scene.add (light2);*/
+                
+                directionalLight = new THREE.DirectionalLight( 0xffffff, 0.7 );
+				scene.add( directionalLight );
+                
+                /*var vertices = [
+                    -1,-1,-1,    1,-1,-1,    1, 1,-1,    -1, 1,-1,
+                    -1,-1, 1,    1,-1, 1,    1, 1, 1,    -1, 1, 1,
                 ];
                 var faces = [
-                  0,2,1,
-                  0,3,2,
-                  0,4,3,
-                  0,5,4,
-                  0,1,6,
-                  6,5,0,
-                  3,4,7,
-                  7,2,3,
-                  6,1,7,
-                  1,2,7,
-                  4,5,6,
-                  6,7,4
-                ];
-                var geometry = new THREE.PolyhedronGeometry( vertices, faces, 10, 0 );
-                var material = new THREE.MeshBasicMaterial( { map: texture } );
+                    2,1,0,    0,3,2,
+                    0,4,7,    7,3,0,
+                    0,1,5,    5,4,0,
+                    1,2,6,    6,5,1,
+                    2,3,7,    7,6,2,
+                    4,5,6,    6,7,4
+                ];*/
+                var polyhedron = 'Octahedron';
+                var vertices = [];
+                for(var i=0; i<POLYHEDRA[polyhedron]['vertex'].length; i++){
+                    for(var i2=0; i2<POLYHEDRA[polyhedron]['vertex'][i].length; i2++){
+                	    vertices.push( POLYHEDRA[polyhedron]['vertex'][i][i2] );
+                    }
+                }
+                var faces = [];
+                for(var i=0; i<POLYHEDRA[polyhedron]['face'].length; i++){
+                    for(var i2=0; i2<POLYHEDRA[polyhedron]['face'][i].length; i2++){
+                	    faces.push( POLYHEDRA[polyhedron]['face'][i][i2] );
+                    }
+                }
+                //var geometry = new THREE.PolyhedronGeometry( vertices, faces, 26, 0 );
+                var geometry = new THREE.PolyhedronGeometry( vertices, faces, 26, 1 );
+                
+                //var material = new THREE.MeshBasicMaterial( { map: texture } );
+                //var material = new THREE.MeshPhongMaterial(  );
+                var material = new THREE.MeshPhongMaterial( { map: texture } );
+                material.shading = THREE.FlatShading;
+                
                 mesh = new THREE.Mesh (geometry, material);
                 scene.add (mesh);
+                mesh.rotation.y -= 0.1;
+                mesh.rotation.y += 1.7;
                 
             });
+            
         }
-
+        
         function animate() {
             requestAnimationFrame( animate );
+            
+            directionalLight.position.copy( camera.position );
+            
             render();
         }
-
+        
         function render() {
             renderer.render( scene, camera );
         }
