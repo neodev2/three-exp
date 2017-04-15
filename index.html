@@ -13,8 +13,7 @@
         <script src="https://threejs.org/build/three.min.js"></script>
         <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
         <script>
-        var camera, scene, renderer;
-        var image;
+        var camera, scene, renderer, controls, sphere;
 
         init();
         animate();
@@ -30,20 +29,15 @@
             camera.position.set( 0, 0, 150 );
 
             controls = new THREE.OrbitControls( camera );
-            //controls.minDistance = 75;
-            //controls.maxDistance = 200;
             controls.enablePan = false;
-
-            image = document.createElement( 'img' );
-            document.body.appendChild( image );
 
             var loader = new THREE.TextureLoader();
             loader.crossOrigin = '';
             loader.load('https://sampleimages.herokuapp.com/?src=midnightcomet.jpg', function ( texture ) {
                 var geometry = new THREE.SphereGeometry( 30, 20, 20 );
                 var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: 0.5 } );
-                var mesh = new THREE.Mesh(geometry, material);
-                scene.add(mesh);
+                sphere = new THREE.Mesh(geometry, material);
+                scene.add(sphere);
             });
         }
 
