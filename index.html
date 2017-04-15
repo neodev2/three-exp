@@ -37,7 +37,7 @@
 
                 var loader = new THREE.TextureLoader();
                 loader.crossOrigin = '';
-                loader.load('https://sampleimages.herokuapp.com/?src=1.jpg', function ( texture ) {
+                loader.load('https://sampleimages.herokuapp.com/?src=midnightcomet.jpg', function ( texture ) {
                     var geometry = new THREE.SphereGeometry( 30, 20, 20 );
                     var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: 0.5 } );
                     var mesh = new THREE.Mesh(geometry, material);
