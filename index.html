@@ -35,27 +35,26 @@
                 var loader = new THREE.TextureLoader();
                 loader.crossOrigin = '';
                 loader.load('https://sampleimages.herokuapp.com/?src=1.jpg', function ( texture ) {
-                    var geometry = new THREE.SphereGeometry(30, 20, 20);
-                    var material = new THREE.MeshBasicMaterial({map: texture, overdraw: 0.5});
+                    var geometry = new THREE.SphereGeometry( 30, 20, 20 );
+                    var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: 0.5 } );
                     var mesh = new THREE.Mesh(geometry, material);
                     scene.add(mesh);
                 });
-
             }
+            
             function animate() {
                 requestAnimationFrame( animate );
-                //controls.update(); // not required here
                 render();
             }
+            
             function render() {
                 renderer.render( scene, camera );
             }
+            
         }
         </script>
     </head>
     <body>
-        <canvas width="395" height="313" style="width: 395px; height: 313px;"></canvas>
-        <img>
         <script src="https://threejs.org/build/three.min.js"></script>
         <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
     </body>
