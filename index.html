@@ -20,6 +20,9 @@
         <script>
         var camera, scene, renderer, controls, mesh, directionalLight;
         
+        init();
+        animate();
+        
         function init() {
             
             renderer = new THREE.WebGLRenderer();
@@ -54,7 +57,7 @@
                 scene.add (light2);*/
                 
                 directionalLight = new THREE.DirectionalLight( 0xffffff, 0.7 );
-		        scene.add( directionalLight );
+                scene.add( directionalLight );
                 
                 /*var vertices = [
                     -1,-1,-1,    1,-1,-1,    1, 1,-1,    -1, 1,-1,
@@ -109,9 +112,6 @@
         function render() {
             renderer.render( scene, camera );
         }
-        
-        init();
-        animate();
         </script>
     </body>
 </html>
