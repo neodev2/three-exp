@@ -8,57 +8,53 @@
                 overflow: hidden;
             }
         </style>
-        <script>
-        window.onload=function(){
-
-            var camera, scene, renderer;
-            var image;
-
-            init();
-            animate();
-
-            function init() {
-                renderer = new THREE.WebGLRenderer();
-                renderer.setSize( window.innerWidth, window.innerHeight );
-                document.body.appendChild( renderer.domElement );
-
-                scene = new THREE.Scene();
-
-                camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-                camera.position.set( 0, 0, 150 );
-
-                controls = new THREE.OrbitControls( camera );
-                //controls.minDistance = 75;
-                //controls.maxDistance = 200;
-                controls.enablePan = false;
-
-                image = document.createElement( 'img' );
-                document.body.appendChild( image );
-
-                var loader = new THREE.TextureLoader();
-                loader.crossOrigin = '';
-                loader.load('https://sampleimages.herokuapp.com/?src=midnightcomet.jpg', function ( texture ) {
-                    var geometry = new THREE.SphereGeometry( 30, 20, 20 );
-                    var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: 0.5 } );
-                    var mesh = new THREE.Mesh(geometry, material);
-                    scene.add(mesh);
-                });
-            }
-            
-            function animate() {
-                requestAnimationFrame( animate );
-                render();
-            }
-            
-            function render() {
-                renderer.render( scene, camera );
-            }
-            
-        }
-        </script>
     </head>
     <body>
         <script src="https://threejs.org/build/three.min.js"></script>
         <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+        <script>
+        var camera, scene, renderer;
+        var image;
+
+        init();
+        animate();
+
+        function init() {
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            document.body.appendChild( renderer.domElement );
+
+            scene = new THREE.Scene();
+
+            camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+            camera.position.set( 0, 0, 150 );
+
+            controls = new THREE.OrbitControls( camera );
+            //controls.minDistance = 75;
+            //controls.maxDistance = 200;
+            controls.enablePan = false;
+
+            image = document.createElement( 'img' );
+            document.body.appendChild( image );
+
+            var loader = new THREE.TextureLoader();
+            loader.crossOrigin = '';
+            loader.load('https://sampleimages.herokuapp.com/?src=midnightcomet.jpg', function ( texture ) {
+                var geometry = new THREE.SphereGeometry( 30, 20, 20 );
+                var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: 0.5 } );
+                var mesh = new THREE.Mesh(geometry, material);
+                scene.add(mesh);
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame( animate );
+            render();
+        }
+
+        function render() {
+            renderer.render( scene, camera );
+        }
+        </script>
     </body>
 </html>
