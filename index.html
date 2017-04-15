@@ -38,6 +38,8 @@
                 var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: 0.5 } );
                 sphere = new THREE.Mesh(geometry, material);
                 scene.add(sphere);
+                sphere.rotation.y -= 1.38;
+                sphere.rotation.x -= 0.18;
             });
         }
 
